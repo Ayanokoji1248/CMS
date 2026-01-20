@@ -1,4 +1,4 @@
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings # type: ignore
 from pydantic import Field
 
 class Settings(BaseSettings):
