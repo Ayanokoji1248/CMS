@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 
 from app.core.database import get_db
 from app.models.department import Department  
-from app.auth.dependencies import get_current_user
+from app.auth.dependencies import get_current_user, admin_required
 from app.department.schemas import CreateDepartment
 from uuid import UUID
 
@@ -16,25 +16,19 @@ department_router = APIRouter(
 @department_router.get('/')
 def get_all_department(
     db:Session = Depends(get_db),
-    current_user = Depends(get_current_user)
+    admin = Depends(admin_required)
 ):
-    if current_user.role.value != "ADMIN":
-        raise HTTPException(403, "Not Allowed")
-    
     departments = db.query(Department).all()
     
     return departments
     
 
-@department_router.post('/')
+@department_router.post('/create')
 def create_department(
     body:CreateDepartment,
     db: Session= Depends(get_db),
-    current_user = Depends(get_current_user),
+    admin = Depends(admin_required),
 ):
-    if current_user.role.value != "ADMIN":
-        raise HTTPException(403, "Not Allowed")
-    
     existing_dep = db.query(Department).filter(
         Department.code == body.code
     ).first()
@@ -57,11 +51,9 @@ def create_department(
 @department_router.post("/toggle-active/{id}")
 def toggle_active(   
     id:UUID,
-    current_user = Depends(get_current_user),
+    admin = Depends(admin_required),
     db:Session = Depends(get_db),
 ):
-    if current_user.role.value != "ADMIN":
-        raise HTTPException(403, "Not Allowed")    
     
     department = db.query(Department).filter(
         Department.id == id

@@ -59,7 +59,9 @@ class Subject(Base):
 
     department= relationship("Department", lazy="selectin")
     
+    # __table_args__ = (
+    #     CheckConstraint("credits>=0", name="credits_non_negative")
+    # )
     __table_args__ = (
-        CheckConstraint("credits>=0", name="credits_non_negative")
+        CheckConstraint("credits >= 0", name="credits_non_negative"),
     )
-    

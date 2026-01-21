@@ -23,11 +23,11 @@ class Student(Base):
         nullable=False,
     )
     
-    # email=Column(
-    #     String,
-    #     nullable=False,
-    #     unique=True
-    # )
+    email=Column(
+        String,
+        nullable=False,
+        unique=True
+    )
     
     enrollment_no= Column(
         String, 
@@ -65,3 +65,5 @@ class Student(Base):
     __table_args__ = (
         CheckConstraint("semester > 0", name="semester_positive"),
     )
+    
+    department = relationship("Department", lazy="selectin")
