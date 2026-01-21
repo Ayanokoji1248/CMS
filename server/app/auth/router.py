@@ -35,7 +35,7 @@ def login(
         httponly=True,
         secure=False,
         samesite="lax",
-        max_age=60*60
+        max_age=60*60,
     )
     
     return {
