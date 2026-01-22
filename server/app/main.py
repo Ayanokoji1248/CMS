@@ -8,6 +8,7 @@ from app.department.router import department_router
 from app.subject.router import subject_router
 from app.faculty.router import faculty_router
 from app.student.router import student_router
+from app.classes.router import class_router
 
 from app.core.database import Base, engine
 
@@ -28,6 +29,7 @@ app.include_router(department_router)
 app.include_router(subject_router)
 app.include_router(faculty_router)
 app.include_router(student_router)
+app.include_router(class_router)
 
 @app.get("/")
 def default():

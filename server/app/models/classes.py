@@ -6,7 +6,7 @@ import uuid
 
 from app.core.database import Base
 
-class Class(Base):
+class Classes(Base):
     __tablename__ = "classes"
     
     id=Column(
@@ -72,12 +72,12 @@ class Class(Base):
         lazy="selectin"
     )
     
-    __table_args__ = {
+    __table_args__ = (
         CheckConstraint("capacity>=0", name="capacity_positive"),
         UniqueConstraint(
             "subject_id",
-            "faculty_id",
+            "academic_year",
             "semester",
             name="unique_class_per_term"
         )
-    }
+    )
